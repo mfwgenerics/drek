@@ -2,6 +2,7 @@ val elideVersion = "1.0-v3-alpha1-rc38"
 
 plugins {
     kotlin("jvm") version "1.6.21"
+    kotlin("kapt") version "1.6.21"
 
     id("dev.elide.buildtools.plugin") version "1.0.0-beta12"
 
@@ -23,7 +24,7 @@ elide {
 }
 
 application {
-    mainClass.set("App")
+    mainClass.set("sample.App")
 }
 
 micronaut {
@@ -31,7 +32,7 @@ micronaut {
     runtime.set(io.micronaut.gradle.MicronautRuntime.NETTY)
     processing {
         incremental.set(true)
-        annotations.add("fullstack.react.*")
+        annotations.addAll(listOf("sample", "sample.*"))
     }
     aot {
         optimizeServiceLoading.set(true)
@@ -45,7 +46,9 @@ micronaut {
 }
 
 dependencies {
-    implementation("dev.elide:server:$elideVersion")
+    kapt(libs.micronaut.inject.java)
+    implementation(libs.elide.base)
+    implementation(libs.elide.server)
 
     implementation(libs.micronaut.context)
     implementation(libs.micronaut.runtime)
