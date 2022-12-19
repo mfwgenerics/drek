@@ -4,6 +4,8 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("kapt") version "1.6.21"
 
+    id("io.koalaql.kapshot-plugin") version "0.0.1-3-ga57811e"
+
     id("dev.elide.buildtools.plugin") version "1.0.0-beta12"
 
     id("io.micronaut.application") version "3.6.5"

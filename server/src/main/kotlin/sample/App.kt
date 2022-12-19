@@ -3,16 +3,19 @@ package sample
 import elide.server.*
 import elide.server.annotations.Page
 import elide.server.controller.PageController
+import io.koalaql.kapshot.CapturedBlock
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.annotation.Get
 import io.micronaut.runtime.Micronaut.build
 import kotlinx.css.Color
 import kotlinx.css.backgroundColor
 import kotlinx.css.fontFamily
-import kotlinx.html.body
-import kotlinx.html.head
-import kotlinx.html.strong
-import kotlinx.html.title
+import kotlinx.html.*
+
+fun captureSource(block: CapturedBlock<Unit>): String {
+    block()
+    return block.source()
+}
 
 /** Self-contained application example, which serves an HTML page, with CSS, that says "Hello, Elide!". */
 object App {
@@ -26,7 +29,13 @@ object App {
                 script("/scripts/ui.js", defer = true)
             }
             body {
-                strong { +"Hello, Elide!" }
+                val source = captureSource {
+                    strong { +"Hello, Elide!" }
+                }
+
+                pre {
+                    +source
+                }
             }
         }
 
